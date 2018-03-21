@@ -1,5 +1,6 @@
 package com.ashish.spark.java.core;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 
 
-public class SparkMap {
+public class SparkMap implements Serializable{
 
 	public static void main(String[] args) {
 		JavaSparkContext javaSparkContext = SparkUtility.getJavaSparkContext(SparkConstant.MASTER_LOCAL, SparkConstant.APP_NAME+"MAP");
@@ -16,6 +17,10 @@ public class SparkMap {
 		JavaRDD<Integer> intRDD = javaSparkContext.parallelize( intList , 2);
 		JavaRDD<Integer> result = intRDD.map(x -> x + 1);
 		result.foreach(System.out::println);
+		
+		
+		result.foreach(s -> System.out.println(s));
+		//result.take(10).forEach(System.out::println);
 		javaSparkContext.close();
 	}
 
