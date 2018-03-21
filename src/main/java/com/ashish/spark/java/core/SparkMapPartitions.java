@@ -11,14 +11,16 @@ public class SparkMapPartitions {
 
 	public static void main(String[] args) {
 		JavaSparkContext javaSparkContext = SparkUtility.getJavaSparkContext(SparkConstant.MASTER_LOCAL, SparkConstant.APP_NAME+"MapPartitions");
-		JavaRDD<Integer> intRDD = javaSparkContext.parallelize(Arrays.asList(1,2,3,4,5,6,7,8,9,10),2);
+		JavaRDD<Integer> intRDD = javaSparkContext.parallelize(Arrays.asList(1,2,3,4,5,6,7,8,9,10),5);
 		intRDD.mapPartitions(iterator -> {  
 				List<Integer> intList =new ArrayList<>();  
 				while(iterator.hasNext()) {
 					intList.add(iterator.next()+1);  
 				}  
 				return intList.iterator(); 
-				}).foreach(System.out::println);; 
+				//}).foreach(System.out::println);
+				// Throwing exception Exception in thread "main" org.apache.spark.SparkException: Task not serializable
+				}).foreach(intValue -> System.out.println(intValue));
 	}
 
 }
