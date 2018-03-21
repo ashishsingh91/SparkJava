@@ -18,7 +18,7 @@ public class SparkReduceByKey {
 		JavaPairRDD<String, Integer> mapToPair = intRDD.mapToPair(i -> (i % 2 == 0)
 				? new
 				Tuple2<String, Integer>("even", i) : new Tuple2<String, Integer>("odd",	i));
-		mapToPair.reduceByKey((v1,v2) -> v1+v2).foreach(System.out::println);
+		mapToPair.reduceByKey((v1,v2) -> v1+v2).foreach(value -> System.out.println(value));
 	}
 
 }
